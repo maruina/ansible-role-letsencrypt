@@ -1,0 +1,4 @@
+letsencrypt_install_dir: /opt/letsencrypt
+letsencrypt_domains: []
+letsencrypt_renew_mode: false
+letsencrypt_renew_domains: []

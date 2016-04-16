@@ -1,0 +1,11 @@
+---
+- name: Install letsencrypt
+  git:
+    accept_hostkey: yes
+    repo: https://github.com/letsencrypt/letsencrypt
+    dest: "{{ letsencrypt_install_dir }}"
+    force: yes
+
+- name: Generate letsencrypt certificate
+  shell: "{{ letsencrypt_install_dir }}/letsencrypt certonly --webroot -w {{ item.webroot }} -d {{ item.name }}"
+  with_items: "{{ letsencrypt_domains }}"
