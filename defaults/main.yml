@@ -1,4 +1,9 @@
 letsencrypt_install_dir: /opt/letsencrypt
+letsencrypt_bin: /root/.local/share/letsencrypt/bin/letsencrypt
+letsencrypt_webserver_user: nginx
+letsencrypt_webserver_group: nginx
+letsencrypt_webroot_dir: /var/www/letsencrypt
+letsencrypt_email: ""
 letsencrypt_domains: []
 letsencrypt_renew_mode: false
 letsencrypt_renew_domains: []

@@ -1,11 +1,23 @@
 ---
-- name: Install letsencrypt
+- name: Dowload letsencrypt
   git:
     accept_hostkey: yes
     repo: https://github.com/letsencrypt/letsencrypt
     dest: "{{ letsencrypt_install_dir }}"
     force: yes
 
+  # letsencrypt-auto returns 1 if it can't find any installer
+- name: Install letsencrypt
+  shell: "{{ letsencrypt_install_dir }}/letsencrypt-auto"
+  ignore_errors: yes
+
+- name: Ensure webroot directory is present
+  file:
+    path: "{{ letsencrypt_webroot_dir }}"
+    owner: "{{ letsencrypt_webserver_user }}"
+    group: "{{ letsencrypt_webserver_group }}"
+    state: directory
+
 - name: Generate letsencrypt certificate
-  shell: "{{ letsencrypt_install_dir }}/letsencrypt certonly --webroot -w {{ item.webroot }} -d {{ item.name }}"
+  shell: "{{ letsencrypt_bin }} certonly --email {{ letsencrypt_email }} --webroot -w {{ letsencrypt_webroot_dir }} -d {{ item }}"
   with_items: "{{ letsencrypt_domains }}"
